@@ -5,7 +5,7 @@
                       :y "20px"
                       :width "320px"
                       :height "650px"
-                      :anchor "top center")
+                      :anchor "top right")
   :stacking "bottom"
   :windowtype "desktop"
   :wm-ignore true
