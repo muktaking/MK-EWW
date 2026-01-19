@@ -8,3 +8,4 @@ eww daemon
 
 # Open your widget
 eww open my-clock
+eww open network-widget

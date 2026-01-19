@@ -1,62 +1,93 @@
 * {
-all: unset;
-font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", sans-serif;
+    all: unset;
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", sans-serif;
 }
 
 .main-container {
-  background-color: rgba(26, 27, 38, 0.8);
-  border-radius: 20px;
-  padding: 25px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(26, 27, 38, 0.8);
+    border-radius: 20px;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 // Ensure the storage items take up the full width
 .storage-item {
-  padding: 0 10px;
-  margin-bottom: 5px;
+    padding: 0 10px;
+    margin-bottom: 5px;
 }
 
 .disk-label {
-  color: #61afef;
-  font-size: 14px;
+    color: #61afef;
+    font-size: 14px;
 }
 
 .disk-stats {
-  color: #abb2bf;
-  font-size: 13px;
-  font-family: "JetBrains Mono";
+    color: #abb2bf;
+    font-size: 13px;
+    font-family: "JetBrains Mono";
 }
 
 // Time alignment fix
 .time-lbl {
-  color: #61afef;
-  font-size: 48px;
-  font-weight: 900;
+    color: #61afef;
+    font-size: 48px;
+    font-weight: 900;
 }
 
 .seconds-lbl {
-  color: #e06c75;
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: -5px;
+    color: #e06c75;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: -5px;
 }
 
 .ampm-lbl {
-  color: #e06c75;
-  font-size: 12px;
+    color: #e06c75;
+    font-size: 12px;
 }
 
 .divider {
-  background-color: rgba(255, 255, 255, 0.05);
-  min-height: 2px;
-  margin: 15px 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    min-height: 2px;
+    margin: 15px 20px;
 }
 
 .section-heading {
-  color: #565f89;
-  font-size: 11px;
-  font-weight: bold;
-  letter-spacing: 2px;
-  margin-top: 20px;    /* Space above the label (from previous section) */
-  margin-bottom: 5px; /* Space below the label (before the actual data) */
+    color: #565f89;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-top: 20px; /* Space above the label (from previous section) */
+    margin-bottom: 5px; /* Space below the label (before the actual data) */
 }
+
+// Network widget
+
+.network-container {
+    background-color: rgba(26, 27, 38, 0.85);
+    border-radius: 18px;
+    padding: 12px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.network-name {
+    color: #61afef; // Blue
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.speed-box {
+    font-size: 12px; /* Slightly larger for readability */
+    color: #abb2bf;
+    font-family: "JetBrains Mono";
+    min-width: 240px; /* Prevents the box from shrinking */
+}
+
+.speed-icon-up {
+    color: #e06c75;
+    font-size: 14px;
+} // Reddish
+.speed-icon-down {
+    color: #98c379;
+    font-size: 14px;
+} // Greenish

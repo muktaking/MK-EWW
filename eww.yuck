@@ -66,3 +66,36 @@
           (label :text "${drive.icon}  ${drive.mount}" :class "disk-label" :width 120 :xalign 0)
           (label :text "${drive.free} (${drive.used})" :class "disk-stats" :width 120 :xalign 1))))
   ))
+
+  ;; First WINDOW DEFINITION ENDS
+
+  ;; NETWORK WINDOW DEFINITION STARTS
+  ;; --- VARS ---
+(defpoll network_info :interval "3s" "~/.config/eww/scripts/get_network")
+(defpoll speeds :interval "1s" "~/.config/eww/scripts/get_speed")
+
+;; --- WINDOW ---
+(defwindow network-widget
+  :monitor 0
+  :geometry (geometry :x "20px" :y "20px" :width "280px" :height "60px" :anchor "bottom right")
+  :stacking "fg"
+  :windowtype "desktop"
+  :wm-ignore true
+  (network-ui))
+
+;; --- WIDGET ---
+(defwidget network-ui []
+  (box :class "network-container" :orientation "v" :space-evenly false :spacing 5
+    ;; Top Row: SSID / Status
+    (label :text network_info :class "network-name" :halign "start")
+
+    ;; Bottom Row: Traffic Speeds
+    (box :orientation "h" :space-evenly true :class "speed-box"
+      (box :orientation "h" :space-evenly false :spacing 5 :halign "start"
+        (label :text "󰶼" :class "speed-icon-up")
+        (label :text "${speeds.up} MB/s")) ;; <-- Changed label
+
+      (box :orientation "h" :space-evenly false :spacing 5 :halign "end"
+        (label :text "󰶹" :class "speed-icon-down")
+        (label :text "${speeds.down} MB/s"))) ;; <-- Changed label
+  ))
