@@ -1,0 +1,42 @@
+#!/bin/bash
+
+ICON_DISK=""
+ICON_HOME=""
+ICON_USB=""
+ICON_OTHER=""
+
+# Get Percentage, Available Space, and Mount point
+raw_data=$(df -h --output=pcent,avail,target | grep -vE 'Use%|/boot|/efi|/var|/tmp|/srv|/snap|/loop')
+
+echo -n "["
+first_item=true
+found_home=false
+root_free="0"
+root_perc="0%"
+
+while read -r used free mount; do
+    if [[ -z "$mount" ]]; then continue; fi
+    if [[ "$mount" != "/" && "$mount" != "/home" && "$mount" != /run/media* && "$mount" != /mnt* ]]; then
+        continue
+    fi
+
+    if [[ "$mount" == "/" ]]; then
+        icon="$ICON_DISK"; root_free="$free"; root_perc="$used"
+    elif [[ "$mount" == "/home" ]]; then
+        icon="$ICON_HOME"; found_home=true
+    elif [[ "$mount" == /run/media* ]]; then
+        icon="$ICON_USB"
+    else
+        icon="$ICON_OTHER"
+    fi
+
+    if [ "$first_item" = true ]; then first_item=false; else echo -n ","; fi
+    echo -n "{\"mount\": \"$mount\", \"used\": \"$used\", \"free\": \"$free\", \"icon\": \"$icon\"}"
+done <<< "$raw_data"
+
+# Fallback for Home if it's on the same partition as Root
+if [ "$found_home" = false ]; then
+    if [ "$first_item" = false ]; then echo -n ","; fi
+    echo -n "{\"mount\": \"/home\", \"used\": \"$root_perc\", \"free\": \"$root_free\", \"icon\": \"$ICON_HOME\"}"
+fi
+echo "]"

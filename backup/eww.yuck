@@ -1,0 +1,30 @@
+
+(defwindow bad-ass
+  :monitor "0"
+  :geometry (geometry :height "160px" :width "400px" :anchor "top right" )
+  :stacking "bottom"
+  :windowtype "desktop"
+  :exclusive false
+  :focusable false
+  :reserve (struts :distance "40px" :side "top")
+
+  (box :orientation "v" :space-evenly false :class "my-ass"
+
+  (box :space-evenly false :class "ass-horizontal"
+    ;:hexpand true
+    ;:valign "center"
+    :halign "center"
+    (label :class "ass-hour"
+      :valign "baseline" 
+      :text "${time.hour}:${time.min}")   
+    (label :class "ass-sec"
+      :valign "baseline"
+      :text "${time.sec}(${time.mtime})"))
+    (box :orientation "v" :space-evenly false :class "ass-bottom"
+      (label :class "ass-day"
+        :text {time.day} )
+        (label :class "ass-date"
+        :text "${time.date} ${time.month}, ${time.year}" ))))
+
+(defpoll time :interval "1s"
+  `date +'{"hour":"%I","min":"%M", "sec": "%S", "mtime": "%P", "day": "%A", "year": "%Y", "month": "%B", "date": "%d"}'`)

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Get weather data: Condition and Temp
+# %C = Condition text (e.g., "Cloudy")
+# %t = Temperature (e.g., "+24°C")
+weather_data=$(curl -s "wttr.in/Rajshahi?format=%C+%t")
+
+# Extract condition and temp
+condition=$(echo "$weather_data" | awk '{print $1}')
+temp=$(echo "$weather_data" | awk '{print $2}')
+
+# Map conditions to Nerd Font Icons
+# (Make sure you have a Nerd Font installed)
+case "$condition" in
+    "Clear" | "Sunny")
+        icon="" ;;
+    "Partly" | "Cloudy" | "Overcast" | "Mist" | "Fog")
+        icon="" ;;
+    "Rain" | "Showers" | "Drizzle")
+        icon="" ;;
+    "Thunderstorm")
+        icon="" ;;
+    "Snow")
+        icon="" ;;
+    *)
+        icon="" ;; # Question mark for unknown
+esac
+
+echo "$icon  $temp"

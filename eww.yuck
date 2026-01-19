@@ -1,0 +1,68 @@
+;; --- WINDOW DEFINITION ---
+(defwindow my-clock
+  :monitor 0
+  :geometry (geometry :x "0%"
+                      :y "20px"
+                      :width "320px"
+                      :height "650px"
+                      :anchor "top center")
+  :stacking "bottom"
+  :windowtype "desktop"
+  :wm-ignore true
+  (clock))
+
+;; --- VARIABLES ---
+(defpoll time :interval "1s" "date '+%I:%M'")
+(defpoll seconds :interval "1s" "date '+%S'")
+(defpoll ampm :interval "1s" "date '+%p'")
+(defpoll date :interval "1h" "date '+%A, %B %d'")
+(defpoll weather_data :interval "30m" "~/.config/eww/scripts/get_weather")
+(defpoll username :interval "24h" "whoami")
+(defpoll uptime :interval "1m" "uptime -p | sed -e 's/up //g'")
+(defpoll storage_json :interval "5s" "~/.config/eww/scripts/get_storage")
+
+;; --- WIDGET STRUCTURE ---
+(defwidget clock []
+  (box :class "main-container"
+       :orientation "v"
+       :space-evenly false
+       :halign "center"
+
+    ;; Profile Section
+    (box :class "profile-section" :orientation "v" :space-evenly false :halign "center" :spacing 10
+         (image :path "./profile.png" :image-width 90 :image-height 90 :class "avatar")
+         (label :text username :class "username-lbl")
+         (label :text "  ${uptime}" :class "uptime-lbl"))
+
+    (box :class "divider")
+
+    ;; Time Section
+    (box :class "time-section" :orientation "v" :space-evenly false :halign "center"
+      (box :orientation "h" :space-evenly false :halign "center"
+        (label :text time :class "time-lbl")
+        (label :text seconds :class "seconds-lbl")
+        (label :text ampm :class "ampm-lbl"))
+      (label :text date :class "date-lbl"))
+
+    ;; Weather Section
+    (label :text "WEATHER" :class "section-heading")
+    (label :text weather_data :class "weather-content")
+
+    ;; System Section
+    (label :text "SYSTEM" :class "section-heading")
+    (box :class "sys-box" :orientation "h" :space-evenly false :halign "center" :spacing 25
+      (box :orientation "h" :space-evenly false :spacing 8
+        (label :text "" :class "cpu-icon")
+        (label :text "${round(EWW_CPU.avg, 0)}%" :class "sys-val"))
+      (box :orientation "h" :space-evenly false :spacing 8
+        (label :text "" :class "ram-icon")
+        (label :text "${round(EWW_RAM.used_mem_perc, 0)}%" :class "sys-val")))
+
+    ;; Storage Section
+    (label :text "STORAGE" :class "section-heading")
+    (box :class "storage-box" :orientation "v" :space-evenly false :halign "center" :spacing 8
+      (for drive in storage_json
+        (box :orientation "h" :space-evenly false :halign "center"
+          (label :text "${drive.icon}  ${drive.mount}" :class "disk-label" :width 120 :xalign 0)
+          (label :text "${drive.free} (${drive.used})" :class "disk-stats" :width 120 :xalign 1))))
+  ))
