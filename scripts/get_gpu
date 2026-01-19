@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# 1. Try NVIDIA First
+if command -v nvidia-smi &> /dev/null; then
+    # Fetch usage and temp, removing units and spaces
+    USAGE=$(nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits | tr -d '[:space:]')
+    TEMP=$(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits | tr -d '[:space:]')
+
+    # Check if we actually got a number
+    if [[ "$USAGE" =~ ^[0-9]+$ ]]; then
+        echo "{\"usage\": \"$USAGE\", \"temp\": \"$TEMP\"}"
+        exit 0
+    fi
+fi
+
+# 2. Try AMD/Integrated Fallback (Standard Linux thermal path)
+# Usually thermal_zone0 or 1 is the GPU/Package temp
+USAGE=$(cat /sys/class/drm/card0/device/gpu_busy_percent 2>/dev/null || echo "0")
+TEMP=$(cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null | awk '{print int($1/1000)}')
+
+# If USAGE is still empty, default to 0
+[[ -z "$USAGE" ]] && USAGE="0"
+[[ -z "$TEMP" ]] && TEMP="0"
+
+echo "{\"usage\": \"$USAGE\", \"temp\": \"$TEMP\"}"

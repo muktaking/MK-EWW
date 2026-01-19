@@ -1,93 +1,121 @@
+// --- RESET & GLOBALS ---
 * {
     all: unset;
     font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", sans-serif;
 }
 
+// --- MAIN WINDOW ---
 .main-container {
-    background-color: rgba(26, 27, 38, 0.8);
-    border-radius: 20px;
+    background-color: rgba(26, 27, 38, 0.85);
+    border-radius: 24px;
     padding: 25px;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-// Ensure the storage items take up the full width
-.storage-item {
-    padding: 0 10px;
-    margin-bottom: 5px;
+// --- PROFILE ---
+.avatar {
+    border-radius: 100%;
+    border: 2px solid #61afef;
+}
+.username-lbl {
+    color: #c678dd;
+    font-size: 20px;
+    font-weight: 900;
+    margin-top: 5px;
+}
+.uptime-lbl {
+    color: #98c379;
+    font-size: 11px;
+    opacity: 0.8;
 }
 
-.disk-label {
-    color: #61afef;
-    font-size: 14px;
+// --- DIVIDER ---
+.divider {
+    background-color: rgba(255, 255, 255, 0.1);
+    min-height: 2px;
+    margin: 15px 30px;
 }
 
-.disk-stats {
-    color: #abb2bf;
-    font-size: 13px;
-    font-family: "JetBrains Mono";
-}
-
-// Time alignment fix
+// --- TIME ---
 .time-lbl {
     color: #61afef;
-    font-size: 48px;
+    font-size: 44px;
     font-weight: 900;
 }
-
 .seconds-lbl {
     color: #e06c75;
     font-size: 16px;
     font-weight: bold;
-    margin-bottom: -5px;
 }
-
 .ampm-lbl {
     color: #e06c75;
     font-size: 12px;
 }
-
-.divider {
-    background-color: rgba(255, 255, 255, 0.05);
-    min-height: 2px;
-    margin: 15px 20px;
+.date-lbl {
+    color: #abb2bf;
+    font-size: 14px;
+    margin-top: -5px;
 }
 
+// --- SECTIONS ---
 .section-heading {
     color: #565f89;
     font-size: 11px;
     font-weight: bold;
     letter-spacing: 2px;
-    margin-top: 20px; /* Space above the label (from previous section) */
-    margin-bottom: 5px; /* Space below the label (before the actual data) */
+    margin-top: 25px;
+    margin-bottom: 12px;
 }
 
-// Network widget
-
-.network-container {
-    background-color: rgba(26, 27, 38, 0.85);
-    border-radius: 18px;
-    padding: 12px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.network-name {
-    color: #61afef; // Blue
-    font-size: 14px;
+.weather-content {
+    color: #d19a66;
+    font-size: 15px;
     font-weight: bold;
 }
 
-.speed-box {
-    font-size: 12px; /* Slightly larger for readability */
+// --- SYSTEM BOX ---
+.sys-box {
+    padding: 0 10px;
+}
+.sys-val {
     color: #abb2bf;
-    font-family: "JetBrains Mono";
-    min-width: 240px; /* Prevents the box from shrinking */
+    font-size: 14px;
+    font-weight: bold;
+    min-width: 45px;
 }
 
-.speed-icon-up {
+// ICON COLORS
+.cpu-icon {
     color: #e06c75;
-    font-size: 14px;
-} // Reddish
-.speed-icon-down {
-    color: #98c379;
-    font-size: 14px;
-} // Greenish
+    font-size: 18px;
+}
+.ram-icon {
+    color: #e5c07b;
+    font-size: 18px;
+}
+.gpu-icon {
+    color: #c678dd;
+    font-size: 18px;
+}
+.temp-icon {
+    color: #d19a66;
+    font-size: 18px;
+}
+
+// --- STORAGE ---
+.storage-box {
+    padding: 0 10px;
+}
+.storage-item {
+    margin-bottom: 6px;
+}
+.disk-label {
+    color: #61afef;
+    font-size: 13px;
+    font-weight: 600;
+}
+.disk-stats {
+    color: #abb2bf;
+    font-size: 12px;
+    font-family: "JetBrains Mono";
+}

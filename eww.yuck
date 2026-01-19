@@ -20,6 +20,7 @@
 (defpoll username :interval "24h" "whoami")
 (defpoll uptime :interval "1m" "uptime -p | sed -e 's/up //g'")
 (defpoll storage_json :interval "5s" "~/.config/eww/scripts/get_storage")
+(defpoll gpu_info :interval "2s" "~/.config/eww/scripts/get_gpu")
 
 ;; --- WIDGET STRUCTURE ---
 (defwidget clock []
@@ -48,15 +49,34 @@
     (label :text "WEATHER" :class "section-heading")
     (label :text weather_data :class "weather-content")
 
-    ;; System Section
-    (label :text "SYSTEM" :class "section-heading")
-    (box :class "sys-box" :orientation "h" :space-evenly false :halign "center" :spacing 25
-      (box :orientation "h" :space-evenly false :spacing 8
-        (label :text "" :class "cpu-icon")
-        (label :text "${round(EWW_CPU.avg, 0)}%" :class "sys-val"))
-      (box :orientation "h" :space-evenly false :spacing 8
-        (label :text "" :class "ram-icon")
-        (label :text "${round(EWW_RAM.used_mem_perc, 0)}%" :class "sys-val")))
+    ;; --- SYSTEM SECTION ---
+    (label :text "SYSTEM" :class "section-heading" :halign "center")
+
+    (box :class "sys-box"
+         :orientation "v"
+         :space-evenly false
+         :spacing 10
+         :halign "fill" ;; Force the box to fill the window width
+         :hexpand true  ;; Ensure it doesn't get squashed
+
+      ;; Row 1: CPU & RAM
+      (box :orientation "h" :space-evenly true
+        (box :orientation "h" :space-evenly false :spacing 8 :halign "center"
+          (label :text "" :class "cpu-icon")
+          (label :text "${round(EWW_CPU.avg, 0)}%" :class "sys-val"))
+        (box :orientation "h" :space-evenly false :spacing 8 :halign "center"
+          (label :text "" :class "ram-icon")
+          (label :text "${round(EWW_RAM.used_mem_perc, 0)}%" :class "sys-val")))
+
+      ;; Row 2: GPU Usage & Temp
+      (box :orientation "h" :space-evenly true
+        (box :orientation "h" :space-evenly false :spacing 8 :halign "center"
+          (label :text "󰢮" :class "gpu-icon")
+          (label :text "${gpu_info.usage}%" :class "sys-val"))
+        (box :orientation "h" :space-evenly false :spacing 8 :halign "center"
+          (label :text "" :class "temp-icon")
+          (label :text "${gpu_info.temp}°C" :class "sys-val")))
+    )
 
     ;; Storage Section
     (label :text "STORAGE" :class "section-heading")
