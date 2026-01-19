@@ -1,105 +1,120 @@
-Since you are working on your **Eww** configuration on **Manjaro**, setting up Git will allow you to version control your files and share them easily.
-
-Here is the step-by-step guide to setting up Git and pushing your project to GitHub.
+This README is designed to help you document your project or share it on GitHub. It covers the specific setup for your **Eww** (ElKowars wacky widgets) clock, including the scripts and dependencies required for your system.
 
 ---
 
-## 1. Install & Configure Git
+# Custom Eww Desktop Widget
 
-First, ensure Git is installed and identify yourself to the system.
+A personalized, modern desktop widget built with **Eww** for Linux. It features a digital clock, weather integration, system resource monitoring, and dynamic storage tracking.
+
+## 🚀 Features
+
+* **Profile Section:** Circular avatar with dynamic username and system uptime.
+* **12-Hour Clock:** Large digital display with seconds and AM/PM indicators.
+* **Weather:** Real-time weather and temperature via `wttr.in`.
+* **System Stats:** Live CPU and RAM usage tracking.
+* **Dynamic Storage:** Automatically lists local partitions with available GB and percentage.
+* **Responsive Styling:** Built with SCSS for a clean, semi-transparent aesthetic.
+
+---
+
+## 🛠️ Prerequisites
+
+Before installation, ensure you have the following dependencies installed on your system (tested on Manjaro/Arch):
 
 ```bash
-# Install Git
-sudo pacman -S git
+# Install Eww
+sudo pacman -S eww
 
-# Set your global username and email
-git config --global user.name "Your Name"
-git config --global user.email "your-email@example.com"
+# Install Nerd Fonts (Essential for icons)
+sudo pacman -S ttf-jetbrains-mono-nerd
+
+# Ensure curl is installed (for weather)
+sudo pacman -S curl
 
 ```
 
 ---
 
-## 2. Initialize Git in your Eww Folder
+## 📂 Installation & Setup
 
-Navigate to your configuration directory and initialize it as a repository.
+### 1. Clone or Create the Directory
 
 ```bash
+mkdir -p ~/.config/eww
 cd ~/.config/eww
 
-# Initialize the repository
-git init
-
-# Create a .gitignore file (Optional but recommended)
-# This prevents tracking temporary or large files
-echo "scripts/__pycache__/" >> .gitignore
-
 ```
 
----
+### 2. Add your Profile Picture
 
-## 3. Create a Repository on GitHub
+Place a square image named `profile.png` inside `~/.config/eww/`.
 
-1. Log in to [GitHub](https://github.com).
-2. Click the **+** icon in the top right and select **New repository**.
-3. Name it `my-eww-widgets`.
-4. Keep it Public or Private (your choice).
-5. **Do not** initialize with a README, license, or .gitignore (we already have files).
-6. Click **Create repository**.
+### 3. Setup Scripts
 
----
-
-## 4. Authenticate (GitHub CLI)
-
-GitHub no longer accepts your account password for pushing code. The easiest way on Linux is using the **GitHub CLI**.
+Create a `scripts` folder and the storage helper:
 
 ```bash
-# Install GitHub CLI
-sudo pacman -S github-cli
-
-# Log in to your account
-gh auth login
+mkdir scripts
+touch scripts/get_storage
+chmod +x scripts/get_storage
 
 ```
 
-*Follow the prompts: Select **GitHub.com**, **HTTPS**, and **Login with a web browser**.*
+*Paste the `get_storage` bash script logic into that file.*
+
+### 4. Apply Configuration
+
+Copy the provided `eww.yuck` and `eww.scss` files into `~/.config/eww/`.
 
 ---
 
-## 5. Add Files and Push
+## 🖥️ Usage
 
-Now, connect your local folder to the GitHub repository you just created.
+### Manual Launch
+
+To start the widget manually, run:
 
 ```bash
-# Add all your files (yuck, scss, scripts, readme)
-git add .
-
-# Commit the changes
-git commit -m "Initial commit: Eww clock widget with storage and weather"
-
-# Link to your GitHub repo (replace URL with yours)
-git remote add origin https://github.com/YOUR_USERNAME/my-eww-widgets.git
-
-# Rename branch to main
-git branch -M main
-
-# Push to GitHub
-git push -u origin main
+eww daemon
+eww open my-clock
 
 ```
 
+### Autostart (KDE/GNOME)
+
+To make the widget appear on login, create a startup script `~/.config/eww/startup.sh`:
+
+```bash
+#!/bin/bash
+eww kill
+eww daemon
+sleep 1
+eww open my-clock
+
+```
+
+Then, add this script to your Desktop Environment's **Autostart** settings.
+
 ---
 
-## 6. How to Update Later
+## ⚙️ Configuration Details
 
-Whenever you make changes to your style or scripts, follow these three simple steps to update GitHub:
+| File | Purpose |
+| --- | --- |
+| `eww.yuck` | Defines the structure, widgets, and poll intervals. |
+| `eww.scss` | Handles all styling, colors, and layout spacing. |
+| `scripts/` | Contains bash scripts for fetching weather and disk data. |
 
-1. **Stage:** `git add .`
-2. **Commit:** `git commit -m "Adjusted weather margins and storage icons"`
-3. **Push:** `git push`
+### Key Commands
+
+* `eww reload`: Apply changes made to `.yuck` or `.scss` files instantly.
+* `eww kill`: Close all open Eww windows and stop the background process.
+* `eww logs`: Debug issues if the widget fails to open.
 
 ---
 
-### Quick Pro-Tip for your Eww Scripts
+## 🤝 Contributing
 
-If you share your repository, remember that your `profile.png` is in that folder. If you want to keep your personal photo private, add `profile.png` to your `.gitignore.
+Feel free to fork this project and add your own modules (Battery, Network, Spotify, etc.).
+
+**Would you like me to generate the specific "get_weather" script code for you to include in this README as well?**
