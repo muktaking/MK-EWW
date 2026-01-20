@@ -14,8 +14,8 @@
 
 // --- PROFILE ---
 .avatar {
-    border-radius: 100%;
-    border: 2px solid #61afef;
+    //border-radius: 0%;
+    //border: 5px solid #61afef;
 }
 .username-lbl {
     color: #c678dd;
@@ -121,51 +121,46 @@
 }
 
 /* --- NETWORK WIDGET CONTAINER --- */
-.network-container {
-    background-color: rgba(26, 27, 38, 0.85); /* Matches main clock */
-    border-radius: 20px;
-    padding: 15px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    min-width: 260px; /* Prevents jumping when SSID changes */
+.network-compact {
+    background-color: rgba(26, 27, 38, 0.8);
+    border-radius: 12px;
+    padding: 5px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* --- SSID / STATUS --- */
-.network-name {
-    color: #61afef; /* Blue */
-    font-family: "JetBrainsMono Nerd Font";
-    font-size: 15px;
-    font-weight: 900;
-    margin-bottom: 8px;
-}
-
-/* --- TRAFFIC ROW --- */
-.speed-box {
-    margin-top: 5px;
-}
-
-.speed-icon-up {
-    color: #e06c75; /* Reddish */
-    font-size: 16px;
-    margin-right: 8px;
-}
-
-.speed-icon-down {
-    color: #98c379; /* Greenish */
-    font-size: 16px;
-    margin-right: 8px;
-}
-
-/* --- SPEED VALUES --- */
-.speed-value {
-    color: #abb2bf;
-    font-family: "JetBrains Mono";
+.net-name {
+    color: #61afef;
     font-size: 13px;
     font-weight: bold;
-    min-width: 75px; /* Ensures '0.0 MB/s' doesn't wiggle */
 }
 
-/* --- OPTIONAL: HOVER EFFECT --- */
-.network-container:hover {
-    background-color: rgba(30, 34, 42, 0.95);
-    border: 1px solid rgba(97, 175, 239, 0.3);
+.net-divider {
+    background-color: rgba(255, 255, 255, 0.1);
+    min-width: 1px; /* Use min-width instead of width */
+    min-height: 15px; /* Give it a fixed height */
+    margin: 0 5px; /* Space on left and right */
+    border-radius: 1px;
+}
+
+.net-speed {
+    color: #abb2bf;
+    font-family: "JetBrains Mono";
+    font-size: 12px;
+    font-weight: 800;
+    min-width: 30px;
+}
+
+.net-unit {
+    color: #565f89;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.net-up-icon {
+    color: #e06c75;
+    font-size: 14px;
+}
+.net-down-icon {
+    color: #98c379;
+    font-size: 14px;
 }

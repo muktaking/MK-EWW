@@ -97,25 +97,34 @@
 ;; --- WINDOW ---
 (defwindow network-widget
   :monitor 0
-  :geometry (geometry :x "20px" :y "20px" :width "280px" :height "60px" :anchor "bottom right")
+  :geometry (geometry :x "5px"
+                      :y "0px"
+                      :width "340px"
+                      :height "35px"
+                      :anchor "bottom right")
   :stacking "fg"
   :windowtype "desktop"
   :wm-ignore true
   (network-ui))
 
-;; --- WIDGET ---
 (defwidget network-ui []
-  (box :class "network-container" :orientation "v" :space-evenly false :spacing 5
-    ;; Top Row: SSID / Status
-    (label :text network_info :class "network-name" :halign "start")
+  (box :class "network-compact" :orientation "h" :space-evenly false :spacing 15
+    ;; Status Icon & Name
+    (label :text network_info :class "net-name")
 
-    ;; Bottom Row: Traffic Speeds
-    (box :orientation "h" :space-evenly true :class "speed-box"
-      (box :orientation "h" :space-evenly false :spacing 5 :halign "start"
-        (label :text "󰶼" :class "speed-icon-up")
-        (label :text "${speeds.up} MB/s" :class "speed-value");; <-- Changed label
+    ;; Vertical Divider
+    (box :class "net-divider")
 
-      (box :orientation "h" :space-evenly false :spacing 5 :halign "end"
-        (label :text "󰶹" :class "speed-icon-down")
-        (label :text "${speeds.down} MB/s"))) ;; <-- Changed label
+    ;; Upload
+    (box :orientation "h" :space-evenly false :spacing 5
+      (label :text "󰶼" :class "net-up-icon")
+      (label :text "${speeds.up}" :class "net-speed"))
+
+    ;; Download
+    (box :orientation "h" :space-evenly false :spacing 5
+      (label :text "󰶹" :class "net-down-icon")
+      (label :text "${speeds.down}" :class "net-speed"))
+
+    ;; Unit
+    (label :text "MB/s" :class "net-unit")
   ))
