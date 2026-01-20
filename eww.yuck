@@ -113,7 +113,7 @@
     (box :orientation "h" :space-evenly true :class "speed-box"
       (box :orientation "h" :space-evenly false :spacing 5 :halign "start"
         (label :text "󰶼" :class "speed-icon-up")
-        (label :text "${speeds.up} MB/s")) ;; <-- Changed label
+        (label :text "${speeds.up} MB/s" :class "speed-value");; <-- Changed label
 
       (box :orientation "h" :space-evenly false :spacing 5 :halign "end"
         (label :text "󰶹" :class "speed-icon-down")

@@ -119,3 +119,53 @@
     font-size: 12px;
     font-family: "JetBrains Mono";
 }
+
+/* --- NETWORK WIDGET CONTAINER --- */
+.network-container {
+    background-color: rgba(26, 27, 38, 0.85); /* Matches main clock */
+    border-radius: 20px;
+    padding: 15px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 260px; /* Prevents jumping when SSID changes */
+}
+
+/* --- SSID / STATUS --- */
+.network-name {
+    color: #61afef; /* Blue */
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 15px;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+/* --- TRAFFIC ROW --- */
+.speed-box {
+    margin-top: 5px;
+}
+
+.speed-icon-up {
+    color: #e06c75; /* Reddish */
+    font-size: 16px;
+    margin-right: 8px;
+}
+
+.speed-icon-down {
+    color: #98c379; /* Greenish */
+    font-size: 16px;
+    margin-right: 8px;
+}
+
+/* --- SPEED VALUES --- */
+.speed-value {
+    color: #abb2bf;
+    font-family: "JetBrains Mono";
+    font-size: 13px;
+    font-weight: bold;
+    min-width: 75px; /* Ensures '0.0 MB/s' doesn't wiggle */
+}
+
+/* --- OPTIONAL: HOVER EFFECT --- */
+.network-container:hover {
+    background-color: rgba(30, 34, 42, 0.95);
+    border: 1px solid rgba(97, 175, 239, 0.3);
+}
