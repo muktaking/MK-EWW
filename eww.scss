@@ -122,45 +122,56 @@
 
 /* --- NETWORK WIDGET CONTAINER --- */
 .network-compact {
-    background-color: rgba(26, 27, 38, 0.8);
+    background-color: rgba(26, 27, 38, 0.85);
     border-radius: 12px;
-    padding: 5px 15px;
+    padding: 4px 12px;
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.net-name {
+/* --- BUTTON STYLING --- */
+.net-btn {
+    padding: 0 4px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.net-btn:hover {
+    background-color: rgba(97, 175, 239, 0.2); /* Subtle blue glow on hover */
+}
+
+.net-icon-main {
     color: #61afef;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 16px;
 }
 
-.net-divider {
-    background-color: rgba(255, 255, 255, 0.1);
-    min-width: 1px; /* Use min-width instead of width */
-    min-height: 15px; /* Give it a fixed height */
-    margin: 0 5px; /* Space on left and right */
-    border-radius: 1px;
+/* --- DIVIDER --- */
+.net-sep {
+    color: rgba(255, 255, 255, 0.1);
+    font-size: 12px;
+    margin-bottom: 2px;
 }
 
+/* --- SPEEDS --- */
 .net-speed {
     color: #abb2bf;
     font-family: "JetBrains Mono";
     font-size: 12px;
     font-weight: 800;
-    min-width: 30px;
+    min-width: 25px;
 }
 
 .net-unit {
     color: #565f89;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: bold;
+    margin-left: 2px;
 }
 
 .net-up-icon {
     color: #e06c75;
-    font-size: 14px;
+    font-size: 13px;
 }
 .net-down-icon {
     color: #98c379;
-    font-size: 14px;
+    font-size: 13px;
 }

@@ -97,31 +97,33 @@
 ;; --- WINDOW ---
 (defwindow network-widget
   :monitor 0
-  :geometry (geometry :x "5px"
-                      :y "0px"
-                      :width "340px"
+  :geometry (geometry :x "17%"
+                      :y "-33px"
+                      :width "220px" ;; Reduced width since name is gone
                       :height "35px"
-                      :anchor "bottom right")
+                      :anchor "top right")
   :stacking "fg"
   :windowtype "desktop"
   :wm-ignore true
   (network-ui))
 
 (defwidget network-ui []
-  (box :class "network-compact" :orientation "h" :space-evenly false :spacing 15
-    ;; Status Icon & Name
-    (label :text network_info :class "net-name")
+  (box :class "network-compact" :orientation "h" :space-evenly false :spacing 12
+    ;; Network Manager Button (Launches GUI on click)
+    (button :onclick "kcmshell6 kcm_networkmanagement &"
+        :class "net-btn"
+        (label :text "󰤨" :class "net-icon-main"))
 
-    ;; Vertical Divider
-    (box :class "net-divider")
+    ;; Divider
+    (label :text "|" :class "net-sep")
 
     ;; Upload
-    (box :orientation "h" :space-evenly false :spacing 5
+    (box :orientation "h" :space-evenly false :spacing 4
       (label :text "󰶼" :class "net-up-icon")
       (label :text "${speeds.up}" :class "net-speed"))
 
     ;; Download
-    (box :orientation "h" :space-evenly false :spacing 5
+    (box :orientation "h" :space-evenly false :spacing 4
       (label :text "󰶹" :class "net-down-icon")
       (label :text "${speeds.down}" :class "net-speed"))
 
