@@ -1,11 +1,11 @@
 ;; --- WINDOW DEFINITION ---
 (defwindow my-clock
   :monitor 0
-  :geometry (geometry :x "0%"
-                      :y "20px"
+  :geometry (geometry :x "25px"
+                      :y "0px"
                       :width "320px"
                       :height "650px"
-                      :anchor "top right")
+                      :anchor "center right")
   :stacking "bottom"
   :windowtype "desktop"
   :wm-ignore true
