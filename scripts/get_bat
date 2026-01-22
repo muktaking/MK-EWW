@@ -1,20 +1,25 @@
 #!/bin/bash
-
-# Updated for your Asus x570z paths
 BAT_PATH="/sys/class/power_supply/BAT0"
 AC_PATH="/sys/class/power_supply/AC0"
 
-# Get Percent
 percent=$(cat "$BAT_PATH/capacity" 2>/dev/null || echo "0")
-
-# Logic: Check if AC is online (1) OR battery is specifically 'Charging'
 ac_online=$(cat "$AC_PATH/online" 2>/dev/null || echo "0")
-bat_status=$(cat "$BAT_PATH/status" 2>/dev/null || echo "Discharging")
 
-if [[ "$ac_online" == "1" ]] || [[ "$bat_status" == "Charging" ]]; then
-    status="Charging"
+# Fetch precise time from upower
+# We use 'sed' to turn "2.4 hours" into "2.4h" to save space
+raw_time=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E "time to (empty|full)" | awk '{print $4,$5}' | sed 's/ hours/h/g' | sed 's/ minutes/m/g')
+
+# If plugged in and full, or just started, upower might return nothing
+if [ -z "$raw_time" ]; then
+    if [ "$ac_online" == "1" ]; then
+        time_rem="Full"
+    else
+        time_rem="..."
+    fi
 else
-    status="Discharging"
+    time_rem="$raw_time"
 fi
 
-echo "{\"percent\": \"$percent\", \"status\": \"$status\"}"
+[ "$ac_online" == "1" ] && status="Charging" || status="Discharging"
+
+echo "{\"percent\": \"$percent\", \"status\": \"$status\", \"time\": \"$time_rem\"}"
