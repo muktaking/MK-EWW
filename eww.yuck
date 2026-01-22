@@ -134,3 +134,44 @@
     ;; Unit
     (label :text "MB/s" :class "net-unit")
   ))
+
+  ;; Battery widget
+
+  (defpoll battery :interval "15s" :initial "{\"percent\":\"0\", \"status\":\"Unknown\"}" "~/.config/eww/scripts/get_bat")
+
+(defwindow battery-window
+  :monitor 0
+  :geometry (geometry :x "15px"
+                      :y "0px"
+                      :width "50px"
+                      :height "200px"
+                      :anchor "center right")
+  :stacking "fg"
+  :windowtype "desktop"
+  :wm-ignore true
+  (battery-ui))
+
+(defwidget battery-ui []
+  (box :class "bat-container" :orientation "v" :space-evenly false :spacing 2
+
+    ;; Dynamic Icon & Class
+    (label :text {battery.status == "Charging" ? "󱐋" :
+                  battery.percent > 90 ? "󰁹" :
+                  battery.percent > 50 ? "󰁾" :
+                  battery.percent > 20 ? "󰁼" : "󰂃"}
+           :class {battery.status == "Charging" ? "bat-charging" :
+                   battery.percent < 20 ? "bat-low" : "bat-normal"})
+
+    ;; 3. Vertical Bar (Moved to the bottom)
+    (box :class "bat-bar-container"
+         :orientation "v"
+         :flipped true
+         :halign "center"
+         :margin-top 10 ;; Adds space ONLY above the bar
+      (progress :value {battery.percent}
+                :orientation "v"
+                :class "bat-bar"))
+
+    ;; Percentage
+    (label :text "${battery.percent}%" :class "bat-text")
+  ))

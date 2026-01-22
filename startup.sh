@@ -19,3 +19,4 @@ sleep 2
 # 4. Open widgets using full paths for scripts in yuck if necessary
 $EWW_BIN open my-clock
 $EWW_BIN open network-widget
+$EWW_BIN open battery-window

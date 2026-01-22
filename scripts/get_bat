@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Updated for your Asus x570z paths
+BAT_PATH="/sys/class/power_supply/BAT0"
+AC_PATH="/sys/class/power_supply/AC0"
+
+# Get Percent
+percent=$(cat "$BAT_PATH/capacity" 2>/dev/null || echo "0")
+
+# Logic: Check if AC is online (1) OR battery is specifically 'Charging'
+ac_online=$(cat "$AC_PATH/online" 2>/dev/null || echo "0")
+bat_status=$(cat "$BAT_PATH/status" 2>/dev/null || echo "Discharging")
+
+if [[ "$ac_online" == "1" ]] || [[ "$bat_status" == "Charging" ]]; then
+    status="Charging"
+else
+    status="Discharging"
+fi
+
+echo "{\"percent\": \"$percent\", \"status\": \"$status\"}"

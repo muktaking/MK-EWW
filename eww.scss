@@ -175,3 +175,68 @@
     color: #98c379;
     font-size: 13px;
 }
+
+// --- Battery -----
+
+.bat-container {
+    background-color: rgba(26, 27, 38, 0.85);
+    border-radius: 20px;
+    padding: 15px 5px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bat-icon {
+    color: #98c379;
+    font-size: 24px;
+}
+.bat-icon-charging {
+    color: #e5c07b;
+    font-size: 24px;
+}
+
+.bat-bar-container {
+    min-height: 120px;
+    padding: 5px 0;
+}
+
+/* Styling the actual progress bar */
+
+.bat-text {
+    color: #abb2bf;
+    font-family: "JetBrains Mono";
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* Charging State - Gold/Yellow */
+.bat-charging {
+    color: #e5c07b;
+    font-size: 26px;
+}
+
+/* Normal State - Green */
+.bat-normal {
+    color: #98c379;
+    font-size: 26px;
+}
+
+/* Low Battery - Red */
+.bat-low {
+    color: #e06c75;
+    font-size: 26px;
+}
+
+/* Styling the progress bar trough and fill */
+progress.bat-bar {
+    & trough {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        min-width: 14px;
+        min-height: 120px;
+    }
+    & progress {
+        /* Transitions the bar color to match the state */
+        background-color: #98c379;
+        border-radius: 10px;
+    }
+}
