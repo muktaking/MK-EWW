@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ "$1" == "shutdown" ]; then
+    systemctl poweroff
+elif [ "$1" == "reboot" ]; then
+    systemctl reboot
+elif [ "$1" == "suspend" ]; then
+    systemctl suspend
+elif [ "$1" == "logout" ]; then
+    qdbus org.kde.ksmserver /KSMServer logout 0 0 0
+elif [ "$1" == "launcher" ]; then
+    # Opens the KDE Application Launcher
+    krunner || plasma-interactiveconsole
+fi

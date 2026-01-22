@@ -1,0 +1,3 @@
+#!/bin/bash
+# For KDE Wayland/X11 toggle
+qdbus org.kde.kglobalaccel /component/kwin invokeShortcut "Show Desktop"

@@ -141,7 +141,7 @@
 
 (defwindow battery-window
   :monitor 0
-  :geometry (geometry :x "0px"
+  :geometry (geometry :x "5px"
                       :y "0px"
                       :width "50px"
                       :height "200px"
@@ -152,8 +152,24 @@
   (battery-ui))
 
 (defwidget battery-ui []
-  (box :class "bat-container" :orientation "v" :space-evenly false :spacing 0 :halign "center" :valign "start"
-       :tooltip "${battery.time} remaining" ;; Shows on hover
+  (box :class "bat-container" :orientation "v" :space-evenly false :spacing 0 :halign "end" :valign "center"
+       ;;:tooltip "${battery.time} remaining" ;; Shows on hover
+
+       ;; 1. File Manager Button (Top)
+    (button :onclick "dolphin ~ &"
+            :class "dolphin-btn"
+            :tooltip "Home"
+            (label :text "󰋜" :class "dolphin-icon" ))
+    (button :onclick "dolphin /mnt/Maniac/Study/Ebook/Psychiatry/ &"
+            :class "dolphin-btn"
+            :tooltip "Psychiatry"
+            (label :text "󰉋" :class "dolphin-icon"))
+    (button :onclick "dolphin /home/muktaking/GoogleDrive_Yeakub/ &"
+            :class "dolphin-btn"
+            :tooltip "Gdrive-Yeakub"
+            (label :text "󰉋" :class "dolphin-icon"))
+
+    (box :class "separator")
 
     ;; Dynamic Icon & Class
     (label :text {battery.status == "Charging" ? "󱐋" :
@@ -164,8 +180,55 @@
                    battery.percent < 20 ? "bat-low" : "bat-normal"})
 
     ;; Optional: Visible time label if you want it always seen
-    (label :text "${battery.time}" :class "bat-time-label")
+    (label :text "${battery.time}" :class "bat-time-label" :tooltip "${battery.time} remaining")
 
     ;; Percentage
     (label :text "${battery.percent}%" :class "bat-text")
+
+    (box :class "separator")
+
+    ;; Toggle power window
+    (button :onclick "eww open --toggle power-window" :class "power-toggle-btn" :tooltip "Toggle Power Buttons"
+        (label :text "󰐥"))
+
+    (box :class "separator")
+
+    ;; Peek at Desktop
+    (button :onclick "~/.config/eww/scripts/toggle_desktop"
+        :class "peek-btn"
+        :tooltip "Peek at Desktop"
+    (label :text "󰇄" :class "peek-icon"))
+  ))
+
+  ;; Power window
+
+  (defwindow power-window
+  :monitor 0
+  :geometry (geometry :x "0px"
+                      :y "0px"
+                      :width "400px"
+                      :height "100px"
+                      :anchor "center center")
+  :stacking "fg"
+  :windowtype "normal"
+  :wm-ignore false
+  (power-ui))
+
+(defwidget power-ui []
+  (box :class "power-container" :orientation "h" :space-evenly true
+    ;; App Launcher
+    (button :onclick "~/.config/eww/scripts/power_menu launcher" :class "p-launch"
+            (label :text "󰀻" :tooltip "Launcher"))
+
+    ;; Sleep
+    (button :onclick "~/.config/eww/scripts/power_menu suspend" :class "p-sleep"
+            (label :text "󰒲" :tooltip "Sleep"))
+
+    ;; Logout
+    (button :onclick "~/.config/eww/scripts/power_menu logout" :class "p-logout"
+            (label :text "󰍃" :tooltip "Logout"))
+
+    ;; Shutdown
+    (button :onclick "~/.config/eww/scripts/power_menu shutdown" :class "p-shutdown"
+            (label :text "󰐥" :tooltip "Shutdown"))
   ))

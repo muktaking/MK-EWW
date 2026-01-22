@@ -3,7 +3,7 @@
 # Get weather data: Condition and Temp
 # %C = Condition text (e.g., "Cloudy")
 # %t = Temperature (e.g., "+24°C")
-weather_data=$(curl -s "wttr.in/Rajshahi?format=%C+%t")
+weather_data=$(curl -s "wttr.in/Dhaka?format=%C+%t")
 
 # Extract condition and temp
 condition=$(echo "$weather_data" | awk '{print $1}')
