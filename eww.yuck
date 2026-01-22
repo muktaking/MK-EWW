@@ -166,17 +166,6 @@
     ;; Optional: Visible time label if you want it always seen
     (label :text "${battery.time}" :class "bat-time-label")
 
-    ;; 3. Vertical Bar (Moved to the bottom)
-    (box :class "bat-bar-container"
-         :orientation "v"
-         :flipped true
-         :halign "center"
-         :valign "start"
-         :margin-top 3;; Adds space ONLY above the bar
-      (progress :value {battery.percent}
-                :orientation "v"
-                :class "bat-bar"))
-
     ;; Percentage
     (label :text "${battery.percent}%" :class "bat-text")
   ))

@@ -194,11 +194,6 @@
     font-size: 24px;
 }
 
-.bat-bar-container {
-    min-height: 10px;
-    padding: 0;
-}
-
 /* Styling the actual progress bar */
 
 .bat-text {
@@ -206,6 +201,7 @@
     font-family: "JetBrains Mono";
     font-size: 12px;
     font-weight: 800;
+    margin: 15px 0 8px 0;
 }
 
 /* Charging State - Gold/Yellow */
