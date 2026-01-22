@@ -20,7 +20,9 @@
 (defpoll username :interval "24h" "whoami")
 (defpoll uptime :interval "1m" "uptime -p | sed -e 's/up //g'")
 (defpoll storage_json :interval "5s" "~/.config/eww/scripts/get_storage")
-(defpoll gpu_info :interval "2s" "~/.config/eww/scripts/get_gpu")
+(defpoll gpu_info :interval "2s"
+                  :initial "{\"usage\":\"0\",\"temp\":\"0\"}"
+                  "~/.config/eww/scripts/get_gpu")
 
 ;; --- WIDGET STRUCTURE ---
 (defwidget clock []
@@ -92,7 +94,9 @@
   ;; NETWORK WINDOW DEFINITION STARTS
   ;; --- VARS ---
 (defpoll network_info :interval "3s" "~/.config/eww/scripts/get_network")
-(defpoll speeds :interval "1s" "~/.config/eww/scripts/get_speed")
+(defpoll speeds :interval "1s"
+                :initial "{\"up\":\"0.0\",\"down\":\"0.0\"}"
+                "~/.config/eww/scripts/get_speed")
 
 ;; --- WINDOW ---
 (defwindow network-widget

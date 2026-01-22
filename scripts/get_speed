@@ -1,24 +1,16 @@
 #!/bin/bash
-
-# Find the active interface
 INTERFACE=$(nmcli -t -f DEVICE,STATE device | grep ':connected' | cut -d: -f1 | head -n 1)
 
+# If no network, return zeros instead of nothing
 if [ -z "$INTERFACE" ]; then
-    echo '{"up": "0.0", "down": "0.0"}'
+    echo '{"up":"0.0","down":"0.0"}'
     exit 0
 fi
 
-# Get bytes before sleep
-R1=$(cat /sys/class/net/$INTERFACE/statistics/rx_bytes)
-T1=$(cat /sys/class/net/$INTERFACE/statistics/tx_bytes)
-sleep 1
-# Get bytes after 1 second
-R2=$(cat /sys/class/net/$INTERFACE/statistics/rx_bytes)
-T2=$(cat /sys/class/net/$INTERFACE/statistics/tx_bytes)
+# ... (rest of your speed calculation code) ...
 
-# Calculate MB/s using awk for decimal precision
-# (Bytes2 - Bytes1) / 1024 / 1024
-UP_MB=$(awk "BEGIN {printf \"%.1f\", ($T2 - $T1) / 1048576}")
-DOWN_MB=$(awk "BEGIN {printf \"%.1f\", ($R2 - $R1) / 1048576}")
+# Final fallback check
+[[ -z "$UP" ]] && UP="0.0"
+[[ -z "$DOWN" ]] && DOWN="0.0"
 
-echo "{\"up\": \"$UP_MB\", \"down\": \"$DOWN_MB\"}"
+echo "{\"up\":\"$UP\",\"down\":\"$DOWN\"}"

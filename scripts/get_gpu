@@ -1,25 +1,28 @@
 #!/bin/bash
 
-# 1. Try NVIDIA First
-if command -v nvidia-smi &> /dev/null; then
-    # Fetch usage and temp, removing units and spaces
-    USAGE=$(nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits | tr -d '[:space:]')
-    TEMP=$(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits | tr -d '[:space:]')
+# Default values
+usage="0"
+temp="0"
 
-    # Check if we actually got a number
-    if [[ "$USAGE" =~ ^[0-9]+$ ]]; then
-        echo "{\"usage\": \"$USAGE\", \"temp\": \"$TEMP\"}"
-        exit 0
+# 1. Try Nvidia
+if command -v nvidia-smi &> /dev/null; then
+    # Grab data, ignore errors if GPU is asleep
+    out=$(nvidia-smi --query-gpu=utilization.gpu,temperature.gpu --format=csv,noheader,nounits 2>/dev/null)
+    if [ $? -eq 0 ] && [ -n "$out" ]; then
+        usage=$(echo "$out" | cut -d',' -f1 | tr -d ' ')
+        temp=$(echo "$out" | cut -d',' -f2 | tr -d ' ')
     fi
 fi
 
-# 2. Try AMD/Integrated Fallback (Standard Linux thermal path)
-# Usually thermal_zone0 or 1 is the GPU/Package temp
-USAGE=$(cat /sys/class/drm/card0/device/gpu_busy_percent 2>/dev/null || echo "0")
-TEMP=$(cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null | awk '{print int($1/1000)}')
+# 2. Fallback to AMD/Integrated if Nvidia returned nothing
+if [ "$usage" == "0" ] || [ -z "$usage" ]; then
+    # Standard Linux paths for Integrated graphics
+    usage=$(cat /sys/class/drm/card0/device/gpu_busy_percent 2>/dev/null || echo "0")
+    temp=$(cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null | awk '{print int($1/1000)}' || echo "0")
+fi
 
-# If USAGE is still empty, default to 0
-[[ -z "$USAGE" ]] && USAGE="0"
-[[ -z "$TEMP" ]] && TEMP="0"
+# 3. FORCE non-empty values to prevent Eww JSON errors
+[[ -z "$usage" ]] && usage="0"
+[[ -z "$temp" ]] && temp="0"
 
-echo "{\"usage\": \"$USAGE\", \"temp\": \"$TEMP\"}"
+echo "{\"usage\": \"$usage\", \"temp\": \"$temp\"}"

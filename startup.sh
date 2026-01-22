@@ -1,11 +1,21 @@
 #!/bin/bash
+# Wait until WAYLAND_DISPLAY is available
+while [ -z "$WAYLAND_DISPLAY" ]; do
+  sleep 1
+done
+# Define the full path to eww
+EWW_BIN="/usr/bin/eww"
 
-# Kill any existing eww instances (good for reloading)
-eww kill
+# 1. Wait for the desktop environment to settle
+sleep 5
 
-# Start the daemon
-eww daemon
+# 2. Kill and restart
+$EWW_BIN kill
+$EWW_BIN daemon &
 
-# Open your widget
-eww open my-clock
-eww open network-widget
+# 3. Wait for the daemon to be ready
+sleep 2
+
+# 4. Open widgets using full paths for scripts in yuck if necessary
+$EWW_BIN open my-clock
+$EWW_BIN open network-widget
